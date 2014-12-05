@@ -1,12 +1,11 @@
 var fs = require('fs');
 
-var jsonFile = 'source_json_file.json';
-var resultFile = "result_json_2_csv.csv";
+function JSONToCSVConvertor() {
 
+	if (!!process.argv[2]) {
 
-function JSONToCSVConvertor(JSONData) {
-
-    var json = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+		var buff = fs.readFileSync(process.argv[2] + '.json', "utf8");
+    var json = typeof buff != 'object' ? JSON.parse(buff) : buff;
     
     var csv = '';
     
@@ -19,10 +18,12 @@ function JSONToCSVConvertor(JSONData) {
 
      csv += row + '\r\n';
 
-     fs.writeFileSync(resultFile, csv, "utf8");
+     fs.writeFileSync(process.argv[2] + '.csv', csv, "utf8");
+	} else {
+		console.log('enter json file');
+	}
+
 }
 
-var buff = fs.readFileSync(jsonFile, "utf8");
-
-JSONToCSVConvertor(buff)
+JSONToCSVConvertor()
     
